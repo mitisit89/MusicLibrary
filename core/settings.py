@@ -25,7 +25,10 @@ SECRET_KEY = "django-insecure-h#y$3#9%3@b@v@vnq3u=f6%)c^@&*5*e7-@)!6277n_15gctqr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = (
+    "0.0.0.0",
+    "127.0.0.1",
+)
 
 
 # Application definition
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "drf_spectacular",
+    "library",
 ]
 
 MIDDLEWARE = [
@@ -68,7 +73,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "core.wsgi.application"
-
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
