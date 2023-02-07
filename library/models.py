@@ -1,13 +1,13 @@
 from django.db import models
 
 
-class Album(models.Model):
-    published = models.DateField()
-
-
 class Artist(models.Model):
     name = models.CharField(max_length=100)
-    artist = models.ForeignKey(Album, related_name="albums", on_delete=models.CASCADE)
+
+
+class Album(models.Model):
+    published = models.DateField()
+    artist = models.ForeignKey(Artist, related_name="artists", on_delete=models.CASCADE)
 
 
 class Song(models.Model):

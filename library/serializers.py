@@ -17,9 +17,29 @@ class AlbumViewSetSerializer(serializers.ModelSerializer[Album]):
         fields = ("published", "tracks")
 
 
-class ArtistSerializer(serializers.ModelSerializer):
-    albums = AlbumViewSetSerializer(many=True)
+class ArtistSerializer(serializers.ModelSerializer[Artist]):
+    artists = AlbumViewSetSerializer(
+        many=True,
+    )
 
     class Meta:
         model = Artist
-        fields = ("name", "albums")
+        fields = ("name", "artists")
+
+    def create(self, validated_data) -> "Artist":
+        artist = Artist.objects.create(name=validated_data.pop("name"))
+
+        for album in validated_data.values():
+            for track in album:
+
+                album = Album.objects.create(
+                    artist=artist, published=track.pop("published")
+                )
+                print(track)
+                for songs in track.values():
+                    for song in songs:
+                        Song.objects.create(
+                            name=song["name"], album=album, number=song["number"]
+                        )
+        artist.save()
+        return artist
