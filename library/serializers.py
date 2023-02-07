@@ -35,7 +35,6 @@ class ArtistSerializer(serializers.ModelSerializer[Artist]):
                 album = Album.objects.create(
                     artist=artist, published=track.pop("published")
                 )
-                print(track)
                 for songs in track.values():
                     for song in songs:
                         Song.objects.create(
